@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Reading dataCleaning from csv
+# Reading data from csv
 dataset = pd.read_csv('../../dataset/dirtydataset.csv')
 
 # Bar plot of missing values
