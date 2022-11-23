@@ -15,3 +15,4 @@ def removeURL(data):
 def removeTags(data):
     data['Text'] = data['Text'].str.replace('#', '')
     data['Text'] = data['Text'].str.replace(r' *@[^ ]*', '')
+    return data
