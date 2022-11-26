@@ -1,0 +1,5 @@
+pandas
+os
+customtkinter
+tkinter
+PIL
