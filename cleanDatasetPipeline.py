@@ -13,7 +13,6 @@ def run_cleaning_pipeline(data):
     data = removeTags(data)
     data = removeNewLine(data)
     data = clean_text(data)
-    print(data['Text'][2])
     return data
 
-run_cleaning_pipeline(data)#.to_csv(f'{data_path}/dataset_clean.csv')
+run_cleaning_pipeline(data).to_parquet(f'{data_path}/dataset_clean.parquet')
