@@ -26,6 +26,3 @@ class Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         return self.texts[idx], self.labels[idx]
-
-test1 = Dataset(data)
-print(len(test1))
