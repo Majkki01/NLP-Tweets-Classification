@@ -8,4 +8,6 @@ DATA_PATH = os.path.join(DATA_DIR, 'dataset_clean.parquet')
 
 SAVE_MODEL_PATH = os.path.join(DATA_DIR, 'trained_model.pt')
 
+DATA_SAMPLE = os.path.join(DATA_DIR, 'dataset_sample.parquet')
+
 print(DATA_PATH)
