@@ -1,10 +1,11 @@
 import tkinter as tk
 import customtkinter as ctk
 import os
+import sys
 from PIL import Image, ImageTk
 import time
-
-
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'model'))
+from predict_sentiment import predict_sentiment
 # Asset path
 ASSET_PATH = os.path.join(os.getcwd(), 'assets')
 
@@ -29,7 +30,7 @@ class Entries:
                         state="normal")
 
 
-    def get_textbox_entry(self, event):
+    def get_textbox_entry(self):
         value = self.textbox.get()
         print(value)
 
@@ -45,7 +46,7 @@ class Images:
         self.happy_emote_img = tk.PhotoImage(file=f'{ASSET_PATH}/happy_emote.png')
         self.angry_emote_img = tk.PhotoImage(file=f'{ASSET_PATH}/angry_emote.png')
         self.confused_emote_img = tk.PhotoImage(file=f'{ASSET_PATH}/confused_emote.png')
-        self.sad_emote_img = tk.PhotoImage(file=f'{ASSET_PATH}/sad_emote.png')
+        self.sad_emote_img = tk.PhotoImage(file=f'{ASSET_PATH}/sad_emote2.png')
         self.moody_app_text_img = tk.PhotoImage(file=f'{ASSET_PATH}/moody_app_text.png')
 
 
@@ -129,8 +130,9 @@ class Buttons:
             self.entry_handler.textbox.delete(0, tk.END)
 
 
-    def analyse_sentiment(self):
-        pass
+    def analyse_sentiment(self, event=None):
+        tweet = entry_handler.get_textbox_entry()
+        predict_sentiment(tweet) 
 
 
     def exit_application(self):
@@ -178,7 +180,7 @@ def close_win(e):
 
 
 # KEYS THAT ARE USED IN THE APP
-app.bind('<Return>', entry_handler.get_textbox_entry)
+app.bind('<Return>', button_handler.analyse_sentiment)
 app.bind('<Escape>', lambda e: close_win(e))
 
 
