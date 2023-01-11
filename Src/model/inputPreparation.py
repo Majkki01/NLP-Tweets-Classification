@@ -2,6 +2,7 @@ import torch
 import pandas as pd
 import numpy as np
 from transformers import BertTokenizer
+from definitions import DATA_PATH
 import os
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
@@ -12,8 +13,7 @@ labels = {'positive':0,
           'litigious':3,
           }
 
-data_path = 'C:/Users/maciejsw/OneDrive - Intel Corporation/Desktop/studia/nlp/NLP-Tweets-Classification/dataset/'
-data = pd.read_parquet(f'{data_path}/dataset_clean.parquet')
+data = pd.read_parquet(DATA_PATH)
 
 class Dataset(torch.utils.data.Dataset):
 
