@@ -3,3 +3,9 @@ os
 customtkinter
 tkinter
 PIL
+torch.nn
+transformers
+torch
+numpy
+torch.optim
+tqdm
