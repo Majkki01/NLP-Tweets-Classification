@@ -6,7 +6,7 @@ from clean_tweet import run_cleaning_pipeline
 
 def predict_sentiment(tweet: str):
 
-    labels_list = ['positive', 'negative', 'uncertainty', 'litigious']
+    labels_list = ['positive', 'negative', 'uncertain', 'litigious']
 
     tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
