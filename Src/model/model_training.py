@@ -9,10 +9,12 @@ from torch.optim import Adam
 from tqdm import tqdm
 from inputPreparation import Dataset
 from bertClassifier import BertClassifier
+from definitions import DATA_PATH, SAVE_MODEL_PATH
+import sys
 
 #data_path = f'{os.path.dirname(os.path.dirname(os.getcwd()))}/dataset/'
-data_path = 'C:/Users/maciejsw/OneDrive - Intel Corporation/Desktop/studia/nlp/NLP-Tweets-Classification/dataset/'
-data = pd.read_parquet(f'{data_path}/dataset_clean.parquet')
+#data_path = 'C:/Users/maciejsw/OneDrive - Intel Corporation/Desktop/studia/nlp/NLP-Tweets-Classification/dataset/'
+data = pd.read_parquet(DATA_PATH)
 data = data.head(100).sample(frac=0.1)
 #splitting dataset into train set (80%), validation set (10%) and test set (10%)
 data_train, data_val, data_test = np.split(data.sample(frac=1, random_state=42), [int(.8*len(data)), int(.9*len(data))])
@@ -83,10 +85,11 @@ def train(model, train_data, val_data, learning_rate, epochs):
                 | Val Loss: {total_loss_val / len(val_data): .3f} \
                 | Val Accuracy: {total_acc_val / len(val_data): .3f}')
 
+
+
 EPOCHS = 1
 model = BertClassifier()
 LR = 1e-6
 train(model, data_train, data_val, LR, EPOCHS)
 
-save_path = data_path + "trained_model.pt"
-torch.save(model, save_path)
+torch.save(model, SAVE_MODEL_PATH)
