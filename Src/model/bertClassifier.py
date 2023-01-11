@@ -11,7 +11,7 @@ class BertClassifier(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, input_id, attention_mask):
-        _, output = self.bert(input_ids= input_id, attention_mask=attention_mask)
+        _, output = self.bert(input_ids= input_id, attention_mask=attention_mask, return_dict=False)
         output = self.dropout(output)
         output = self.linear(output)
         output = self.relu(output)

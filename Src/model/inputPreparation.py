@@ -4,7 +4,7 @@ import numpy as np
 from transformers import BertTokenizer
 import os
 
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
 labels = {'positive':0,
           'negative':1,
@@ -26,3 +26,7 @@ class Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         return self.texts[idx], self.labels[idx]
+
+
+
+
