@@ -9,7 +9,7 @@ from torch.optim import Adam
 from tqdm import tqdm
 from inputPreparation import Dataset
 from bertClassifier import BertClassifier
-from definitions import DATA_PATH, SAVE_MODEL_PATH
+from definitions import SAVE_MODEL_PATH, DATA_SAMPLE
 import sys
 
 
@@ -78,11 +78,11 @@ def train(model, train_data, val_data, learning_rate, epochs):
 
 if __name__ == "__main__":
     epochs = int(sys.argv[1])  # no. of epochs
-    head = int(sys.argv[2])  # number to be extracted from dataset
-    sample_frac = float(sys.argv[3])  # fraction of head to be passed to the model
+    # head = int(sys.argv[2])  # number to be extracted from dataset
+    # sample_frac = float(sys.argv[3])  # fraction of head to be passed to the model
 
-    data = pd.read_parquet(DATA_PATH)
-    data = data.head(head).sample(frac=sample_frac)
+    data = pd.read_parquet(DATA_SAMPLE)
+    data = data.sample(frac=1)
     # splitting dataset into train set (80%), validation set (10%) and test set (10%)
     data_train, data_val, data_test = np.split(data.sample(frac=1, random_state=42),
                                                [int(.8 * len(data)), int(.9 * len(data))])
