@@ -32,7 +32,7 @@ class Entries:
 
     def get_textbox_entry(self):
         value = self.textbox.get()
-        print(value)
+        return value
 
 
 class Images:
@@ -73,6 +73,8 @@ class Buttons:
         self.entry_handler = entry_handler
         self.authors_count = 0
         self.what_is_it_about_count = 0
+        self.rely = 0.7
+        self.animation_count = 0
         self.exit_button = tk.Button(app, image=image_handler.exit_button_img,
                                 borderwidth=0,
                                 background=(BG_COLOR),
@@ -129,11 +131,85 @@ class Buttons:
             self.what_is_it_about_count = 0
             self.entry_handler.textbox.delete(0, tk.END)
 
+    def animate_happy(self):
+        if self.animation_count == 150:
+            self.animation_count = 0
+            image_handler.happy_emote.place(relx=0.15, rely=0.7)
+            app.after(10, None)
+            return
+        if self.rely > 0.65:
+            image_handler.happy_emote.place(relx=0.15, rely=self.rely)
+            self.rely *= 0.997 # ten numer to kłopoty
+            app.after(10, self.animate_happy)
+            self.animation_count +=1
+        else:
+            self.rely /= 0.91
+            app.after(10, self.animate_happy)
+            self.animation_count +=1
+
+    def animate_negative(self):
+        if self.animation_count == 150:
+            self.animation_count = 0
+            image_handler.angry_emote.place(relx=0.35, rely=0.7)
+            app.after(10, None)
+            return
+        if self.rely > 0.65:
+            image_handler.angry_emote.place(relx=0.35, rely=self.rely)
+            self.rely *= 0.997 
+            app.after(10, self.animate_negative)
+            self.animation_count +=1
+        else:
+            self.rely /= 0.91
+            app.after(10, self.animate_negative)
+            self.animation_count +=1
+
+    def animate_uncertain(self):
+        if self.animation_count == 150:
+            self.animation_count = 0
+            image_handler.confused_emote.place(relx=0.55, rely=0.7)
+            app.after(10, None)
+            return
+        if self.rely > 0.65:
+            image_handler.confused_emote.place(relx=0.55, rely=self.rely)
+            self.rely *= 0.997 
+            app.after(10, self.animate_uncertain)
+            self.animation_count +=1
+        else:
+            self.rely /= 0.91
+            app.after(10, self.animate_uncertain)
+            self.animation_count +=1
+
+    def animate_litigious(self):
+        if self.animation_count == 150:
+            self.animation_count = 0
+            image_handler.sad_emote.place(relx=0.75, rely=0.7)
+            app.after(10, None)
+            return
+        if self.rely > 0.65:
+            image_handler.sad_emote.place(relx=0.75, rely=self.rely)
+            self.rely *= 0.997
+            app.after(10, self.animate_litigious)
+            self.animation_count +=1
+        else:
+            self.rely /= 0.91
+            app.after(10, self.animate_litigious)
+            self.animation_count +=1     
+
 
     def analyse_sentiment(self, event=None):
         tweet = entry_handler.get_textbox_entry()
-        predict_sentiment(tweet) 
+        output = predict_sentiment(str(tweet))
+        self.entry_handler.textbox.delete(0, tk.END)
+        self.entry_handler.textbox.insert(0, output)
 
+        if output == 'positive':
+            self.animate_happy()
+        elif output == 'negative':
+            self.animate_negative()
+        elif output == 'uncertain':
+            self.animate_uncertain()
+        elif output == 'litigious':
+            self.animate_litigious()
 
     def exit_application(self):
         app.destroy()
